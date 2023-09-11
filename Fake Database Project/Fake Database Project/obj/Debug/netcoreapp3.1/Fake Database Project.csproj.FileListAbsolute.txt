@@ -45,7 +45,6 @@ C:\Users\pc\Desktop\Fake Database Project\Fake Database Project\Fake Database Pr
 C:\Users\pc\Desktop\Fake Database Project\Fake Database Project\Fake Database Project\obj\Debug\netcoreapp3.1\MainWindow.g.cs
 C:\Users\pc\Desktop\Fake Database Project\Fake Database Project\Fake Database Project\obj\Debug\netcoreapp3.1\App.g.cs
 C:\Users\pc\Desktop\Fake Database Project\Fake Database Project\Fake Database Project\obj\Debug\netcoreapp3.1\Fake Database Project_MarkupCompile.cache
-C:\Users\pc\Desktop\Fake Database Project\Fake Database Project\Fake Database Project\obj\Debug\netcoreapp3.1\Fake Database Project_MarkupCompile.lref
 C:\Users\pc\Desktop\Fake Database Project\Fake Database Project\Fake Database Project\obj\Debug\netcoreapp3.1\MainWindow.baml
 C:\Users\pc\Desktop\Fake Database Project\Fake Database Project\Fake Database Project\obj\Debug\netcoreapp3.1\Fake Database Project.g.resources
 C:\Users\pc\Desktop\Fake Database Project\Fake Database Project\Fake Database Project\obj\Debug\netcoreapp3.1\Fake Database Project.AssemblyInfoInputs.cache

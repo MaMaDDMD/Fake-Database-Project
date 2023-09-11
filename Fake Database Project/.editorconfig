@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# S3251: Implementations should be provided for "partial" methods
+dotnet_diagnostic.S3251.severity = none
