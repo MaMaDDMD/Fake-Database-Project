@@ -22,11 +22,7 @@ namespace Fake_Database_Project.ViewModel
         {
             await Task.Run(() =>
             {
-<<<<<<< HEAD
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => Query.Clear()));
-=======
-                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => Data.Clear()));
->>>>>>> bb2356b5b73ddf74ed25a2a0451dcf7608d6fa2d
                 if (mobiles != null)
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => Query=mobiles));
             },cancelationtoken);
