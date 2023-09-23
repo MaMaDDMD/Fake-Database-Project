@@ -25,7 +25,7 @@ namespace Fake_Database_Project
             await Task.Run(() => viewmodel.LoadData(), cancellationToken);
             using(var Db=new MobileDbContext())
                 await Task.Run(() => viewmodel.LoadQuery(Db.Mobiles.ToList()), cancellationToken);
-            await Task.Delay(200, cancellationToken);
+            await Task.Delay(300, cancellationToken);
             await Task.Run(() => viewmodel.Paging("1"), cancellationToken);
             Processing.Visibility = Visibility.Collapsed;
         }

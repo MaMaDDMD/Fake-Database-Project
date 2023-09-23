@@ -13,7 +13,7 @@ namespace Fake_Database_Project.ViewModel
     public class DataViewModel
     {
         private readonly CancellationToken cancelationtoken = new CancellationToken();
-        public ObservableCollection<Mobiles> CurrentShowingData { get; } = new ObservableCollection<Mobiles>();
+        public ObservableCollection<Mobiles> CurrentShowingData { get; set; } = new ObservableCollection<Mobiles>();
         public List<Mobiles> Data { get; set; } = new List<Mobiles>();
         private List<Mobiles> Query = new List<Mobiles>();
         public readonly MobileDbContext Db = new MobileDbContext();
@@ -37,8 +37,7 @@ namespace Fake_Database_Project.ViewModel
                     {
                         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => CurrentShowingData.Clear()));
                         var query = Query.Where((m, i) => i >= 100 * (PageNum - 1) && i < 100 * PageNum);
-                        foreach (var item in query)
-                            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,new Action(()=> CurrentShowingData.Add(item)));
+                        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => query.ToList().ForEach(x => CurrentShowingData.Add(x))));
                     },cancelationtoken);
                 }
                 else
