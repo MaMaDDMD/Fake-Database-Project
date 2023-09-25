@@ -12,36 +12,35 @@ namespace Fake_Database_Project.ViewModel
 {
     public class DataViewModel
     {
-        private readonly CancellationToken cancelationtoken = new CancellationToken();
+        readonly CancellationToken cancelationtoken = new CancellationToken();
         public ObservableCollection<Mobiles> CurrentShowingData { get; set; } = new ObservableCollection<Mobiles>();
-        public List<Mobiles> Data { get; set; } = new List<Mobiles>();
-        private List<Mobiles> Query = new List<Mobiles>();
-        public readonly MobileDbContext Db = new MobileDbContext();
-        public async Task LoadData() => await Task.Run(() => Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => Data = Db.Mobiles.ToList())), cancelationtoken);
-        public async Task LoadQuery(List<Mobiles> mobiles)
+        List<Mobiles> AllData { get; set; } = new List<Mobiles>();
+        List<Mobiles> SearchResult { get; set; } = new List<Mobiles>();
+        public async Task LoadAllData()
+        {
+            using var Db = new MobileDbContext();
+            await Task.Run(() => AllData = Db.Mobiles.ToList(), cancelationtoken);
+        }
+        public async Task Searching(string SearchText)
         {
             await Task.Run(() =>
             {
-                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => Query.Clear()));
-                if (mobiles != null)
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => Query=mobiles));
-            },cancelationtoken);
+                SearchResult.Clear();
+                SearchResult = AllData.Where(m => m.Name.Split(' ', StringSplitOptions.RemoveEmptyEntries).Aggregate("", (s1, s2) => s1 + s2, s => s.ToLower().Contains(SearchText.Split(' ', StringSplitOptions.RemoveEmptyEntries).Aggregate("", (s1, s2) => s1 + s2, s => s.Trim().ToLower())))).ToList();
+            }, cancelationtoken);
         }
         public async Task Paging(string PageNumStr)
         {
             if (int.TryParse(PageNumStr, out int PageNum))
             {
-                if (PageNum > 0 && PageNum < 10001)
-                {
+                if (PageNum > 0 && PageNum <= SearchResult.Count / 100 + 1)
                     await Task.Run(() =>
                     {
                         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => CurrentShowingData.Clear()));
-                        var query = Query.Where((m, i) => i >= 100 * (PageNum - 1) && i < 100 * PageNum);
-                        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => query.ToList().ForEach(x => CurrentShowingData.Add(x))));
-                    },cancelationtoken);
-                }
+                        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => SearchResult.Where((m, i) => i >= 100 * (PageNum - 1) && i < 100 * PageNum).ToList().ForEach(r => CurrentShowingData.Add(r))));
+                    }, cancelationtoken);
                 else
-                    MessageBox.Show("Your number must be from 1 to 10000...!");
+                    MessageBox.Show($"Out Of Range...!");
             }
             else
                 MessageBox.Show("Please enter a number not anything else...!");
